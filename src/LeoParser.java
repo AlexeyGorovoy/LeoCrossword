@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
 
 public class LeoParser {
     File htmFile;
@@ -18,7 +16,7 @@ public class LeoParser {
 
     public LeoParser(String filename) {
         htmFile = new File(filename);
-        dictionary = new Hashtable<String, String>();
+        dictionary = new LeoDictionary();
     }
 
 
@@ -79,6 +77,6 @@ public class LeoParser {
         String wordRu = subString.substring(indexWordStart+1, indexWordEnd);
 
         //System.out.println(wordEn + " - " + wordRu);
-        dictionary.put(wordEn, wordRu);
+        dictionary.put(wordEn.trim(), wordRu.trim());
     }
 }

@@ -23,9 +23,13 @@ public class EclipseSaver {
             //bw.write("; https://github.com/Debilonik/LeoCrossword/" + terminator);
             bw.write(terminator);
 
+            int maxEnWordLength = ((LeoDictionary) dictionary).getMaxKeyLength();
+            int maxRuWordLength = ((LeoDictionary) dictionary).getMaxKeyLength();
+
             for (String wordEn : dictionary.keySet()) {
                 String wordRu = dictionary.get(wordEn);
-                bw.write(wordEn.toUpperCase() + ":  " + wordRu + terminator);
+                bw.write(roundLength(wordEn.toLowerCase(), maxEnWordLength, true) + "\t\t"
+                        + roundLength(wordRu.toLowerCase(), maxRuWordLength, false) + terminator);
             }
 
             bw.flush();
@@ -41,5 +45,18 @@ public class EclipseSaver {
     public static void save(String filename, Map dictionary) {
         EclipseSaver.dictionary = dictionary;
         save(filename);
+    }
+
+    private static String roundLength(String str, int length, boolean front) {
+        StringBuilder sb = new StringBuilder(str);
+
+        while(sb.length() < length) {
+            if (front) {
+                sb.insert(0, " ");
+            } else {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
     }
 }
